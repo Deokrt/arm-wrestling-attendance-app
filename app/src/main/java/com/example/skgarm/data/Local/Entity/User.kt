@@ -1,4 +1,4 @@
-package com.example.skgarm.data
+package com.example.skgarm.data.Local.Entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

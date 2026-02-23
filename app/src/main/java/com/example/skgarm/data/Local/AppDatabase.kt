@@ -1,9 +1,13 @@
-package com.example.skgarm.data
+package com.example.skgarm.data.Local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.example.skgarm.data.Local.DAOs.AvailabilityDao
+import com.example.skgarm.data.Local.DAOs.UserDao
+import com.example.skgarm.data.Local.Entity.Availability
+import com.example.skgarm.data.Local.Entity.User
 
 import dagger.Module
 import dagger.Provides
