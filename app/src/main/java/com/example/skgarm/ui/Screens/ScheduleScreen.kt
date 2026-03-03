@@ -38,12 +38,10 @@ import kotlin.ranges.until
 import com.example.skgarm.ui.theme.*
 
 
-
 val TIME_SLOTS = listOf("17:00 - 19:00", "19:00 - 21:00", "21:00 - 23:00")
 val DAY_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("EEEE")
 val DATE_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("MMM d")
 val KEY_FORMATTER: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-
 
 
 @Composable
@@ -76,22 +74,42 @@ fun ScheduleScreen(
                     modifier = Modifier.size(44.dp)
                 ) {
                     Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                        Icon(Icons.Filled.FitnessCenter, null, tint = Color.White, modifier = Modifier.size(22.dp))
+                        Icon(
+                            Icons.Filled.FitnessCenter,
+                            null,
+                            tint = Color.White,
+                            modifier = Modifier.size(22.dp)
+                        )
                     }
                 }
                 Spacer(Modifier.width(12.dp))
                 Column(Modifier.weight(1f)) {
-                    Text("Training Schedule", color = TextPrimary, fontSize = 17.sp, fontWeight = FontWeight.Bold)
+                    Text(
+                        "Training Schedule",
+                        color = TextPrimary,
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.Bold
+                    )
                     Text("Next 7 days", color = TextSecondary, fontSize = 12.sp)
                 }
-                Text(user.name, color = TextSecondary, fontSize = 13.sp, modifier = Modifier.padding(end = 10.dp))
+                Text(
+                    user.name,
+                    color = TextSecondary,
+                    fontSize = 13.sp,
+                    modifier = Modifier.padding(end = 10.dp)
+                )
                 IconButton(
                     onClick = { viewModel.logout() },
                     modifier = Modifier
                         .size(38.dp)
                         .background(BgField, RoundedCornerShape(10.dp))
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.Logout, null, tint = TextPrimary, modifier = Modifier.size(18.dp))
+                    Icon(
+                        Icons.AutoMirrored.Filled.Logout,
+                        null,
+                        tint = TextPrimary,
+                        modifier = Modifier.size(18.dp)
+                    )
                 }
             }
 
@@ -123,7 +141,12 @@ fun DayCard(day: LocalDate, currentUser: User, viewModel: AppViewModel) {
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(modifier = Modifier.padding(18.dp)) {
-            Text(day.format(DAY_FORMATTER), color = TextPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Text(
+                day.format(DAY_FORMATTER),
+                color = TextPrimary,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
             Text(day.format(DATE_FORMATTER), color = TextSecondary, fontSize = 13.sp)
             Spacer(Modifier.height(14.dp))
             TIME_SLOTS.forEach { slot ->
@@ -148,7 +171,8 @@ fun SlotCard(
     currentUser: User,
     viewModel: AppViewModel
 ) {
-    val attendees by viewModel.attendeesFlow(date, timeSlot).collectAsState(initial = kotlin.collections.emptyList())
+    val attendees by viewModel.attendeesFlow(date, timeSlot)
+        .collectAsState(initial = kotlin.collections.emptyList())
     val isAvailable by viewModel.isAvailableFlow(date, timeSlot).collectAsState(initial = false)
     var showModal by remember { mutableStateOf(false) }
 
@@ -205,7 +229,10 @@ fun SlotCard(
                 colors = ButtonDefaults.buttonColors(
                     containerColor = if (isAvailable) Teal else BgPersonIcon
                 ),
-                border = if (isAvailable) null else androidx.compose.foundation.BorderStroke(1.dp, Color(0xFF333333)),
+                border = if (isAvailable) null else androidx.compose.foundation.BorderStroke(
+                    1.dp,
+                    Color(0xFF333333)
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(46.dp)
@@ -230,7 +257,6 @@ fun SlotCard(
     }
 }
 
-// ─── Attendees Modal ──────────────────────────────────────────────────────────
 
 @Composable
 fun AttendeesModal(
@@ -261,7 +287,12 @@ fun AttendeesModal(
                     verticalAlignment = Alignment.Top
                 ) {
                     Column {
-                        Text(displayDate, color = TextPrimary, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        Text(
+                            displayDate,
+                            color = TextPrimary,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
                         Text(timeSlot, color = TextSecondary, fontSize = 14.sp)
                     }
                     IconButton(

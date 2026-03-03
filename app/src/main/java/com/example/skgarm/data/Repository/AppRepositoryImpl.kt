@@ -17,24 +17,24 @@ class AppRepositoryImpl @Inject constructor(
 ) : AppRepository {
 
 
-    override suspend fun registerUser(name : String , email : String , password : String) : Result<User>{
+    override suspend fun registerUser(name: String, email: String, password: String): Result<User> {
 
 
         // answer to "what can go wrong"
 
-        if (name.isEmpty()){
+        if (name.isEmpty()) {
             return Result.failure(Exception("Name can't be empty"))
         }
-        if ( password.length < 6 ){
+        if (password.length < 6) {
             return Result.failure(Exception("Password too short"))
         }
 
-        if (!(email.endsWith("@gmail.com") || email.endsWith("@hotmail.com"))){
+        if (!(email.endsWith("@gmail.com") || email.endsWith("@hotmail.com"))) {
             return Result.failure(Exception("Invalid email"))
         }
         val existing = userDao.getByEmail(email)
 
-        if (existing != null){
+        if (existing != null) {
             return Result.failure(Exception("Email already registered"))
         }
 
@@ -44,7 +44,7 @@ class AppRepositoryImpl @Inject constructor(
             password
         )
         userDao.insert(user)
-       return Result.success(user)
+        return Result.success(user)
 
     }
 
@@ -58,7 +58,7 @@ class AppRepositoryImpl @Inject constructor(
 
 
 
-        if (user.password != password){
+        if (user.password != password) {
             return Result.failure(Exception("Wrong password"))
         }
 
@@ -66,21 +66,26 @@ class AppRepositoryImpl @Inject constructor(
 
     }
 
-    suspend fun markAvailable(date : String , timeSlot : String, user : User){
+    suspend fun markAvailable(date: String, timeSlot: String, user: User) {
         availabilityDao.markAvailable(
 
-            Availability(date = date , timeSlot = timeSlot , userEmail = user.email , userName = user.name)
+            Availability(
+                date = date,
+                timeSlot = timeSlot,
+                userEmail = user.email,
+                userName = user.name
+            )
         )
     }
 
-    suspend fun markUnavailable(date : String , timeSlot : String, userEmail : String){
-        availabilityDao.markUnavailable(date , timeSlot , userEmail)
+    suspend fun markUnavailable(date: String, timeSlot: String, userEmail: String) {
+        availabilityDao.markUnavailable(date, timeSlot, userEmail)
 
 
     }
 
     fun getAttendeesFlow(date: String, timeSlot: String): Flow<List<Availability>> =
-    availabilityDao.getAttendeesFlow(date, timeSlot)
+        availabilityDao.getAttendeesFlow(date, timeSlot)
 
     fun isUserAvailableFlow(date: String, timeSlot: String, email: String): Flow<Int> =
         availabilityDao.isUserAvailableFlow(date, timeSlot, email)

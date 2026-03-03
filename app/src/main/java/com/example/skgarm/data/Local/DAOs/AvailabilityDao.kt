@@ -30,5 +30,9 @@ interface AvailabilityDao {
     @Query(
         "SELECT COUNT(*) FROM availability WHERE date = :date AND timeSlot = :timeSlot AND userEmail = :email"
     )
-    fun isUserAvailableFlow(date: String, timeSlot: String, email: String): Flow<Int> // The parameters on this fun will be on the params on the query
+    fun isUserAvailableFlow(
+        date: String,
+        timeSlot: String,
+        email: String
+    ): Flow<Int> // The parameters on this fun will be on the params on the query
 }

@@ -9,9 +9,9 @@ import androidx.room.Entity
     primaryKeys = ["date", "timeSlot", "userEmail"]
 )
 data class Availability(
-    var date : String ,
-    var timeSlot : String ,
-    var userEmail : String,
-    val userName : String
+    var date: String,
+    var timeSlot: String,
+    var userEmail: String,
+    val userName: String
 
 )

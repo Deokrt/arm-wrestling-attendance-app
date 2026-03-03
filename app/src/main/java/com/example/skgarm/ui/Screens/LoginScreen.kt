@@ -155,7 +155,11 @@ fun LoginScreen(
                     .height(52.dp)
             ) {
                 if (isLoading) {
-                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(20.dp), strokeWidth = 2.dp)
+                    CircularProgressIndicator(
+                        color = Color.White,
+                        modifier = Modifier.size(20.dp),
+                        strokeWidth = 2.dp
+                    )
                 } else {
                     Text(
                         if (isJoinMode) "Join Team" else "Sign In",

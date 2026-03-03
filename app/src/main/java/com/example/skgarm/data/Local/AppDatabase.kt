@@ -8,6 +8,7 @@ import com.example.skgarm.data.Local.DAOs.AvailabilityDao
 import com.example.skgarm.data.Local.DAOs.UserDao
 import com.example.skgarm.data.Local.Entity.Availability
 import com.example.skgarm.data.Local.Entity.User
+import com.example.skgarm.data.UserPreferences
 
 import dagger.Module
 import dagger.Provides
@@ -44,6 +45,12 @@ object  AppModule {
 
     @Provides
     fun providesAvailabilityDao(db : AppDatabase) : AvailabilityDao = db.availabilityDAO()
+
+    @Provides
+    @Singleton
+    fun provideUserPreferences(
+        @ApplicationContext context: Context
+    ): UserPreferences = UserPreferences(context)
 
 
 }
