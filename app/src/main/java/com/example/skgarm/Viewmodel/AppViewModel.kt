@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 import com.example.skgarm.data.Repository.AppRepositoryImpl
+import com.example.skgarm.data.UserPreferences
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -30,10 +31,10 @@ sealed class AuthState {
 
 @HiltViewModel
 class AppViewModel @Inject constructor(
-    private val repository: AppRepositoryImpl
+    private val repository: AppRepositoryImpl,
+    private val userPreferences: UserPreferences
 ) : ViewModel() {
 
-    // Who is currently logged in
     private val _currentUser = MutableStateFlow<User?>(null)
     val currentUser = _currentUser.asStateFlow()
 
@@ -41,9 +42,24 @@ class AppViewModel @Inject constructor(
     val authState = _authState.asStateFlow()
 
 
+    init {
+        // when ViewModel created → check if email is saved
+        viewModelScope.launch {
+            userPreferences.savedUser.first()?.let { savedUser ->
+                _currentUser.value = savedUser
+                _authState.value = AuthState.Success(savedUser)
+            }
+        }
+
+    }
+
+
     fun logout() {
-        _currentUser.value = null
-        _authState.value = AuthState.Idle
+        viewModelScope.launch {
+            userPreferences.clearUser()
+            _currentUser.value = null
+            _authState.value = AuthState.Idle
+        }
     }
 
     fun signIn(email: String, password: String) {
@@ -54,6 +70,7 @@ class AppViewModel @Inject constructor(
                 onSuccess = { user ->
                     _currentUser.value = user
                     _authState.value = AuthState.Success(user)
+                    userPreferences.saveUser(user)
 
                 },
                 onFailure = {
@@ -75,6 +92,7 @@ class AppViewModel @Inject constructor(
                 onSuccess = { user ->
                     _currentUser.value = user
                     _authState.value = AuthState.Success(user)
+                    userPreferences.saveUser(user)
                 },
                 onFailure = {
                     _authState.value = AuthState.Error(it.message ?: "Registration  failed")
