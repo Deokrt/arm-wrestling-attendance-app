@@ -29,7 +29,7 @@ class AppRepositoryImpl @Inject constructor(
             return Result.failure(Exception("Password too short"))
         }
 
-        if (!(name.endsWith("@gmail.com"))){
+        if (!(email.endsWith("@gmail.com") || email.endsWith("@hotmail.com"))){
             return Result.failure(Exception("Invalid email"))
         }
         val existing = userDao.getByEmail(email)
@@ -38,7 +38,11 @@ class AppRepositoryImpl @Inject constructor(
             return Result.failure(Exception("Email already registered"))
         }
 
-        val user = User(email.trim().lowercase(), name.trim(), password)
+        val user = User(
+            name.trim(),
+            email.trim().lowercase(),
+            password
+        )
         userDao.insert(user)
        return Result.success(user)
 
