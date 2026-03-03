@@ -4,6 +4,7 @@ import com.example.skgarm.data.Local.DAOs.AvailabilityDao
 import com.example.skgarm.data.Local.DAOs.UserDao
 import com.example.skgarm.data.Local.Entity.Availability
 import com.example.skgarm.data.Local.Entity.User
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -28,7 +29,7 @@ class AppRepositoryImpl @Inject constructor(
             return Result.failure(Exception("Password too short"))
         }
 
-        if (! (name.endsWith("@gmail.com")) ){
+        if (!(name.endsWith("@gmail.com"))){
             return Result.failure(Exception("Invalid email"))
         }
         val existing = userDao.getByEmail(email)
@@ -73,6 +74,12 @@ class AppRepositoryImpl @Inject constructor(
 
 
     }
+
+    fun getAttendeesFlow(date: String, timeSlot: String): Flow<List<Availability>> =
+    availabilityDao.getAttendeesFlow(date, timeSlot)
+
+    fun isUserAvailableFlow(date: String, timeSlot: String, email: String): Flow<Int> =
+        availabilityDao.isUserAvailableFlow(date, timeSlot, email)
 
 
 }

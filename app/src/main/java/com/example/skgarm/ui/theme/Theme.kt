@@ -1,58 +1,44 @@
 package com.example.skgarm.ui.theme
 
-import android.app.Activity
-import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
+// ─── Brand Colors ─────────────────────────────────────────────────────────────
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+val Teal = Color(0xFF1DB87B)
+val TealDark = Color(0xFF156B48)
+val TealAlpha = Color(0x991DB87B)
+val BgPrimary = Color(0xFF0A0A0A)
+val BgCard = Color(0xFF111111)
+val BgSlot = Color(0xFF151515)
+val BgSlotActive = Color(0xFF0F3D28)
+val BgField = Color(0xFF1C1C1C)
+val BgModal = Color(0xFF1A1A1A)
+val BgPersonIcon = Color(0xFF2A2A2A)
+val TextPrimary = Color.White
+val TextSecondary = Color(0xFF888888)
+val TextMuted = Color(0xFF555555)
+val BorderDefault = Color(0xFF1A1A1A)
+val BorderActive = Color(0xFF2A5C40)
+val ErrorRed = Color(0xFFFF6B6B)
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+// ─── Theme ───────────────────────────────────────────────────────────────────
+
+private val DarkColors = darkColorScheme(
+    primary = Teal,
+    background = BgPrimary,
+    surface = BgCard,
     onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    onBackground = TextPrimary,
+    onSurface = TextPrimary,
 )
 
 @Composable
-fun SkgArmTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
-) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
-
+fun SkgArmTheme(content: @Composable () -> Unit) {
     MaterialTheme(
-        colorScheme = colorScheme,
-        typography = Typography,
+        colorScheme = DarkColors,
         content = content
     )
 }

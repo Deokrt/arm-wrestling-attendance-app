@@ -18,8 +18,5 @@ interface UserDao {
 
     @Query("SELECT * FROM users")
     fun getAllFlow(): Flow<List<User>>
-    /* Flow<List<User>> → gives you the data NOW and then keeps watching.
-    Every time the table changes it automatically
-    sends you the new list. Your UI updates automatically. */
 
 }
