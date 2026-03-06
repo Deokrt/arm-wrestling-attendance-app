@@ -5,11 +5,9 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-// ─── Brand Colors ─────────────────────────────────────────────────────────────
+
 
 val Teal = Color(0xFF1DB87B)
-val TealDark = Color(0xFF156B48)
-val TealAlpha = Color(0x991DB87B)
 val BgPrimary = Color(0xFF0A0A0A)
 val BgCard = Color(0xFF111111)
 val BgSlot = Color(0xFF151515)
@@ -24,7 +22,7 @@ val BorderDefault = Color(0xFF1A1A1A)
 val BorderActive = Color(0xFF2A5C40)
 val ErrorRed = Color(0xFFFF6B6B)
 
-// ─── Theme ───────────────────────────────────────────────────────────────────
+
 
 private val DarkColors = darkColorScheme(
     primary = Teal,
